@@ -2,7 +2,7 @@ name: Build and Deploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -15,8 +15,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
           cache-dependency-path: wp-content/themes/chrisslater-hybrid/frontend/package-lock.json
 
       - name: Install Dependencies
@@ -27,24 +27,24 @@ jobs:
         working-directory: wp-content/themes/chrisslater-hybrid/frontend
         run: npm run build
 
-      - name: Prepare Zip
+      - name: Prepare Artifact
         run: |
-          # Create a directory for the artifact
-          mkdir -p build-artifact/chrisslater-hybrid
-          
-          # Copy theme files
-          cp -r wp-content/themes/chrisslater-hybrid/* build-artifact/chrisslater-hybrid/
-          
-          # Remove node_modules and src if you want a cleaner prod build (optional)
-          rm -rf build-artifact/chrisslater-hybrid/frontend/node_modules
-          # We might want to keep src for sourcemaps, but usually dist is enough.
-          
-          # Zip it
-          cd build-artifact
-          zip -r ../chrisslater-hybrid.zip chrisslater-hybrid
+          mkdir -p build-artifact
+          # Copy the theme into a structure that matches WP Engine requirements if deploying theme only
+          # or just zip it for manual upload.
+          # For WP Engine Git deployment, we usually push the whole repo.
+          # For wpe-site-deploy, we specify the source directory.
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+          # Let's verify the build output exists
+          ls -la wp-content/themes/chrisslater-hybrid/frontend/dist
+
+      # OPTIONAL: Deploy to WP Engine (Requires Secrets)
+      # Uncomment and configure if using GitHub Actions to deploy
+      - name: Deploy to WP Engine
+        uses: wpengine/github-action-wpe-site-deploy@v3
         with:
-          name: chrisslater-hybrid-theme
-          path: chrisslater-hybrid.zip
+          WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSG_KEY_PRIVATE }}
+          WPE_ENV: chrisslater
+          SRC_PATH: "wp-content/themes/chrisslater-hybrid"
+          REMOTE_PATH: "wp-content/themes/chrisslater-hybrid"
+          PHP_LINT: FALSE # Optional: Disable if causing false positives on template files
