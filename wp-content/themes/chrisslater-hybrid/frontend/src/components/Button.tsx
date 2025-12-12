@@ -1,50 +1,43 @@
-import { ButtonHTMLAttributes } from 'react';
-import { clsx, type ClassValue } from 'clsx';
+import { ReactNode, ButtonHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
-
-// Utility for class merging
-function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
+import { clsx } from 'clsx';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'primary' | 'secondary' | 'ghost' | 'outline';
+    children: ReactNode;
+    variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
     size?: 'sm' | 'md' | 'lg';
-    isLoading?: boolean;
 }
 
 export function Button({
+    children,
     className,
     variant = 'primary',
     size = 'md',
-    isLoading,
-    children,
     ...props
 }: ButtonProps) {
-    const baseStyles = "inline-flex items-center justify-center rounded-lg font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
-
     const variants = {
-        primary: "bg-primary-600 text-white hover:bg-primary-700 shadow-md shadow-primary-500/20",
-        secondary: "bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 shadow-sm",
-        ghost: "bg-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100",
-        outline: "bg-transparent border border-slate-300 text-slate-700 hover:border-slate-400"
+        primary: 'bg-primary-600 hover:bg-primary-500 text-white shadow-lg shadow-primary-900/20 border border-transparent',
+        secondary: 'bg-slate-800 hover:bg-slate-700 text-white border border-white/10',
+        outline: 'bg-transparent border border-white/20 text-white hover:bg-white/5 hover:border-white/40',
+        ghost: 'bg-transparent text-slate-300 hover:text-white hover:bg-white/5',
     };
 
     const sizes = {
-        sm: "h-8 px-3 text-sm",
-        md: "h-10 px-4 py-2",
-        lg: "h-12 px-6 text-lg",
+        sm: 'px-3 py-1.5 text-sm',
+        md: 'px-5 py-2.5 text-base',
+        lg: 'px-8 py-4 text-lg font-semibold',
     };
 
     return (
         <button
-            className={cn(baseStyles, variants[variant], sizes[size], className)}
-            disabled={isLoading || props.disabled}
+            className={twMerge(clsx(
+                'inline-flex items-center justify-center rounded-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none',
+                variants[variant],
+                sizes[size],
+                className
+            ))}
             {...props}
         >
-            {isLoading ? (
-                <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-            ) : null}
             {children}
         </button>
     );

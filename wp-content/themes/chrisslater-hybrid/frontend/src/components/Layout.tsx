@@ -1,130 +1,113 @@
-import { useState, useEffect } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from './Button';
+import { useCart } from '../context/CartContext';
 
-export function Layout({ children }: { children: React.ReactNode }) {
+interface LayoutProps {
+    children: ReactNode;
+}
+
+export function Layout({ children }: LayoutProps) {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const location = useLocation();
+    const { pathname } = useLocation();
+    const { cartCount } = useCart();
 
-    // Handle scroll effect for header
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-        };
+        const handleScroll = () => setScrolled(window.scrollY > 20);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     // Close mobile menu on route change
-    useEffect(() => {
-        setMobileMenuOpen(false);
-    }, [location.pathname]);
+    useEffect(() => setMobileMenuOpen(false), [pathname]);
+
+    const navLinks = [
+        { name: 'Services', path: '/services' },
+        { name: 'About', path: '/about' },
+        { name: 'Blog', path: '/blog' },
+        { name: 'Shop', path: '/shop' },
+    ];
 
     return (
-        <div className="flex min-h-screen flex-col bg-slate-50 font-sans selection:bg-primary-200 selection:text-primary-900">
-            {/* Header */}
+        <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-primary-500 selection:text-white">
             <header
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-200/50 py-3' : 'bg-transparent py-5'
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${scrolled ? 'bg-slate-950/80 backdrop-blur-md border-white/10 py-4' : 'bg-transparent border-transparent py-6'
                     }`}
             >
                 <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-                    <Link to="/" className="flex items-center gap-2 group">
-                        <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-600 flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:shadow-primary-500/30 transition-shadow">
-                            C
+                    <Link to="/" className="text-2xl font-display font-bold text-white tracking-tight flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
+                            <span className="text-white text-sm">CS</span>
                         </div>
-                        <span className="text-xl font-display font-bold text-slate-900 tracking-tight">Chris<span className="text-primary-600">Slater</span></span>
+                        Chris Slater
                     </Link>
 
-                    {/* Desktop Navigation */}
+                    {/* Desktop Nav */}
                     <nav className="hidden md:flex items-center gap-8">
-                        <NavLink to="/">Home</NavLink>
-                        <NavLink to="/services">Services</NavLink>
-                        <NavLink to="/blog">Blog</NavLink>
-                        <NavLink to="/about">About</NavLink>
+                        {navLinks.map(link => (
+                            <Link
+                                key={link.path}
+                                to={link.path}
+                                className={`text-sm font-medium transition-colors hover:text-primary-400 ${pathname === link.path ? 'text-primary-400' : 'text-slate-300'
+                                    }`}
+                            >
+                                {link.name}
+                            </Link>
+                        ))}
+                        <div className="flex items-center gap-4 ml-4">
+                            <Link to="/contact">
+                                <Button size="sm">Let's Talk</Button>
+                            </Link>
+                            {cartCount > 0 && (
+                                <Link to="/cart" className="relative p-2 text-slate-300 hover:text-white">
+                                    <svg className="w-6 h-6 border-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                                    <span className="absolute top-0 right-0 w-4 h-4 bg-primary-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full">
+                                        {cartCount}
+                                    </span>
+                                </Link>
+                            )}
+                        </div>
                     </nav>
 
-                    <div className="hidden md:flex items-center gap-4">
-                        <Button variant="ghost" size="sm">Log In</Button>
-                        <Button size="sm">Get Started</Button>
-                    </div>
-
-                    {/* Mobile Menu Button */}
+                    {/* Mobile Toggle */}
                     <button
-                        className="md:hidden p-2 text-slate-600"
+                        className="md:hidden text-white"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
-                        {mobileMenuOpen ? (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 18 18" /></svg>
-                        ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></svg>
-                        )}
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path></svg>
                     </button>
                 </div>
-
-                {/* Mobile Menu */}
-                {mobileMenuOpen && (
-                    <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-slate-200 shadow-xl p-4 flex flex-col gap-4 animate-fade-in">
-                        <Link to="/" className="text-lg font-medium text-slate-700">Home</Link>
-                        <Link to="/services" className="text-lg font-medium text-slate-700">Services</Link>
-                        <Link to="/blog" className="text-lg font-medium text-slate-700">Blog</Link>
-                        <Button className="w-full">Get Started</Button>
-                    </div>
-                )}
             </header>
 
-            {/* Main Content */}
-            <main className="flex-1 pt-20">
+            {/* Mobile Menu */}
+            {mobileMenuOpen && (
+                <div className="fixed inset-0 z-40 bg-slate-950 pt-24 px-6 md:hidden">
+                    <div className="flex flex-col gap-6 text-center">
+                        {navLinks.map(link => (
+                            <Link
+                                key={link.path}
+                                to={link.path}
+                                className="text-2xl font-display font-bold text-slate-200"
+                            >
+                                {link.name}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            <main className="pt-20">
                 {children}
             </main>
 
-            {/* Footer */}
-            <footer className="bg-slate-950 text-slate-200 py-12 border-t border-slate-800">
-                <div className="container mx-auto px-4 md:px-6">
-                    <div className="grid md:grid-cols-4 gap-8">
-                        <div className="col-span-1 md:col-span-2">
-                            <span className="text-2xl font-display font-bold text-white tracking-tight">Chris<span className="text-primary-400">Slater</span></span>
-                            <p className="mt-4 text-slate-400 max-w-sm">
-                                Empowering businesses with AI-driven strategies and custom development solutions.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 className="font-bold text-white mb-4">Navigation</h4>
-                            <ul className="space-y-2 text-slate-400">
-                                <li><Link to="/" className="hover:text-primary-400 transition-colors">Home</Link></li>
-                                <li><Link to="/services" className="hover:text-primary-400 transition-colors">Services</Link></li>
-                                <li><Link to="/blog" className="hover:text-primary-400 transition-colors">Blog</Link></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="font-bold text-white mb-4">Connect</h4>
-                            <ul className="space-y-2 text-slate-400">
-                                <li><a href="#" className="hover:text-primary-400 transition-colors">Twitter</a></li>
-                                <li><a href="#" className="hover:text-primary-400 transition-colors">LinkedIn</a></li>
-                                <li><a href="#" className="hover:text-primary-400 transition-colors">GitHub</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
-                        &copy; {new Date().getFullYear()} Chris Slater. All rights reserved.
-                    </div>
+            <footer className="border-t border-white/5 bg-slate-950 py-12 mt-20">
+                <div className="container mx-auto px-4 text-center">
+                    <p className="text-slate-500 text-sm">
+                        &copy; {new Date().getFullYear()} Chris Slater. Built with WordPress & React 19.
+                    </p>
                 </div>
             </footer>
         </div>
-    );
-}
-
-function NavLink({ to, children }: { to: string; children: React.ReactNode }) {
-    const location = useLocation();
-    const isActive = location.pathname === to;
-
-    return (
-        <Link
-            to={to}
-            className={`text-sm font-medium transition-colors hover:text-primary-600 ${isActive ? 'text-primary-600' : 'text-slate-600'
-                }`}
-        >
-            {children}
-        </Link>
     );
 }
