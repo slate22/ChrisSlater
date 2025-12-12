@@ -69,6 +69,19 @@ function chrisslater_scripts() {
                     }
                 }
             }
+        } else {
+            // Debugging: Log if manifest is missing (visible in source if WP_DEBUG is on, or check logs)
+            error_log('ChrisSlater Theme: Manifest not found at ' . $manifest_path);
+            
+            // EMERGENCY FALLBACK: Look for any .css file in dist/assets
+            $assets_dir = CHRISSLATER_THEME_DIR . $vite_dist_path . '/assets';
+            if (is_dir($assets_dir)) {
+                 $files = glob($assets_dir . '/*.css');
+                 if (!empty($files)) {
+                     $css_file_name = basename($files[0]);
+                     wp_enqueue_style('chrisslater-fallback-style', CHRISSLATER_THEME_URI . $vite_dist_path . '/assets/' . $css_file_name, [], CHRISSLATER_VERSION);
+                 }
+            }
         }
     }
     
