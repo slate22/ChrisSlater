@@ -1,0 +1,50 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: wp-content/themes/chrisslater-hybrid/frontend/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: wp-content/themes/chrisslater-hybrid/frontend
+        run: npm ci
+
+      - name: Build React App
+        working-directory: wp-content/themes/chrisslater-hybrid/frontend
+        run: npm run build
+
+      - name: Prepare Zip
+        run: |
+          # Create a directory for the artifact
+          mkdir -p build-artifact/chrisslater-hybrid
+          
+          # Copy theme files
+          cp -r wp-content/themes/chrisslater-hybrid/* build-artifact/chrisslater-hybrid/
+          
+          # Remove node_modules and src if you want a cleaner prod build (optional)
+          rm -rf build-artifact/chrisslater-hybrid/frontend/node_modules
+          # We might want to keep src for sourcemaps, but usually dist is enough.
+          
+          # Zip it
+          cd build-artifact
+          zip -r ../chrisslater-hybrid.zip chrisslater-hybrid
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: chrisslater-hybrid-theme
+          path: chrisslater-hybrid.zip

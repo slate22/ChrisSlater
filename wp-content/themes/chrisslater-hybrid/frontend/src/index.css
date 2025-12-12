@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@layer base {
+    body {
+        @apply text-slate-800 bg-white;
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Outfit', sans-serif;
+}
