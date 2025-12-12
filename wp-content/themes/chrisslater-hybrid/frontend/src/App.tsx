@@ -7,6 +7,7 @@ import Services from './pages/Services';
 import About from './pages/About';
 import Blog from './pages/Blog';
 import Shop from './pages/Shop';
+import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import Post from './pages/Post';
 
@@ -17,6 +18,7 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/shop" element={<Shop />} />
                 <Route path="/:slug" element={<Post />} />
