@@ -56,8 +56,10 @@ export function Layout({ children }: LayoutProps) {
                             </Link>
                         ))}
                         <div className="flex items-center gap-4 ml-4">
-                            <Link to="/contact">
-                                <Button size="sm">Let's Talk</Button>
+                            <Link to="/agent-builder">
+                                <Button size="sm" className="bg-gradient-to-r from-accent-500 to-primary-500 hover:from-accent-400 hover:to-primary-400 border-none shadow-lg shadow-primary-500/20">
+                                    Build Agent
+                                </Button>
                             </Link>
                             {cartCount > 0 && (
                                 <Link to="/cart" className="relative p-2 text-slate-300 hover:text-white">

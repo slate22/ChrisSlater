@@ -24,6 +24,12 @@ function chrisslater_create_audit_products() {
             'desc' => 'Stop writing for 2015. This blueprint maps out a content strategy designed for the AI Era. We provide a 6-month topical map, entity relationship guide, and content briefs optimized for large language models (LLMs). Dominate the semantic web.',
             'price' => '1200',
             'sku'   => 'AI-CONTENT-001'
+        ],
+        [
+            'title' => 'Custom AI Marketing Agent',
+            'desc' => 'A fully autonomous marketing agent tailored to your brand voice. Capable of drafting posts, engaging with comments, and analyzing trend data on platforms like X (Twitter) and LinkedIn. Includes initial prompt engineering, knowledge base integration, and a 1-hour handover session.',
+            'price' => '2500',
+            'sku'   => 'AGENT-MKT-001'
         ]
     ];
 
