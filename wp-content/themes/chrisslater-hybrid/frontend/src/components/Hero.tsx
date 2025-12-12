@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Button } from './Button';
 import { Circuitry } from './Circuitry';
 
@@ -17,28 +18,29 @@ export function Hero() {
                 </div>
 
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight mb-8 leading-tight">
-                    Building the <br />
-                    <span className="text-gradient">Intelligent Future</span>
+                    Turn AI Potential into <br />
+                    <span className="text-gradient">Production Reality</span>.
                 </h1>
 
                 <p className="text-xl md:text-2xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                    I help forward-thinking companies integrate **Artificial Intelligence** into their core products, bridging the gap between complex LLMs and user-centric web applications.
+                    Don't just keep up—lead the market. I architect high-performance AI applications that automate workflows, engage users, and drive tangible business growth.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <Button size="lg" className="min-w-[180px] shadow-lg shadow-primary-500/20">
-                        View Services
-                    </Button>
-                    <Button size="lg" variant="outline" className="min-w-[180px]">
-                        Contact Me
-                    </Button>
+                    <Link to="/services">
+                        <Button size="lg" className="min-w-[180px] shadow-lg shadow-primary-500/20">
+                            View Services
+                        </Button>
+                    </Link>
+                    <Link to="/contact">
+                        <Button size="lg" variant="outline" className="min-w-[180px]">
+                            Contact Me
+                        </Button>
+                    </Link>
                 </div>
             </div>
 
-            {/* Scroll Indicator */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-slate-500">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-            </div>
+
         </section>
     );
 }

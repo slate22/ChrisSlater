@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
@@ -59,7 +60,9 @@ export default function Services() {
                         <p className="text-slate-400 mb-6 flex-grow">
                             Get the best of both worlds. Keep your easy WordPress backend while upgrading your frontend to a modern, headless React experience.
                         </p>
-                        <Button variant="outline" size="sm" className="w-full mt-auto">See Process</Button>
+                        <Link to="/contact" className="w-full mt-auto">
+                            <Button variant="outline" size="sm" className="w-full">See Process</Button>
+                        </Link>
                     </Card>
                 </div>
 

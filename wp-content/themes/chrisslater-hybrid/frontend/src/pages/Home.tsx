@@ -33,18 +33,15 @@ export default function Home() {
                                     Hi, I'm <span className="text-primary-600">Chris Slater</span>.
                                 </h2>
                                 <h3 className="text-xl text-slate-600 font-medium mb-6">
-                                    Living near the Gulf, coding for the World.
+                                    Living on the Gulf, vibe-coding for the World.
                                 </h3>
                                 <p className="text-slate-600 leading-relaxed mb-6 text-lg">
-                                    I'm not just a developer; I'm an AI strategist obsessed with velocity and quality.
-                                    By leveraging the latest in Generative AI and modern frameworks, I build software
-                                    at a pace and quality that traditional methods can't match.
+                                    I'm an AI Strategist and Full Stack Developer. I help businesses integrate Generative AI into their core products, bridging the gap between complex LLMs and user-centric web applications.
                                 </p>
                                 <p className="text-slate-600 leading-relaxed mb-8 text-lg">
-                                    Whether it's a hybrid WordPress/React masterpiece or a complex AI-driven application,
-                                    I bring the calm focus of the coast to the chaotic world of tech.
+                                    Whether it's a hybrid WordPress/React masterpiece or a complex AI-driven application, I bring the calm focus of the coast to the chaotic world of tech.
                                 </p>
-                                <Button variant="secondary" className="bg-secondary-100 text-secondary-900 hover:bg-secondary-200 border-secondary-200">
+                                <Button variant="secondary" className="bg-secondary-100 text-secondary-900 hover:bg-secondary-200 border-secondary-200" onClick={() => window.location.href = '/about'}>
                                     More About Me &rarr;
                                 </Button>
                             </div>

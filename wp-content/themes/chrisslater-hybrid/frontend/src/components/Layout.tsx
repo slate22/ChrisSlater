@@ -23,8 +23,8 @@ export function Layout({ children }: LayoutProps) {
     useEffect(() => setMobileMenuOpen(false), [pathname]);
 
     const navLinks = [
-        { name: 'Services', path: '/services' },
         { name: 'About', path: '/about' },
+        { name: 'Services', path: '/services' },
         { name: 'Blog', path: '/blog' },
         { name: 'Shop', path: '/shop' },
     ];

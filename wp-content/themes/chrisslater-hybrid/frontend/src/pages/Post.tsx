@@ -24,39 +24,60 @@ const GET_POST = gql`
 `;
 
 export default function Post() {
-    const { slug } = useParams();
-    const { loading, error, data } = useQuery(GET_POST, {
-        variables: { slug },
-    });
+  const { slug } = useParams();
+  const { loading, error, data } = useQuery(GET_POST, {
+    variables: { slug },
+  });
 
-    if (loading) return <div className="container mx-auto px-4 py-16">Loading...</div>;
-    if (error) return <div className="container mx-auto px-4 py-16">Error loading content.</div>;
+  if (loading) return <div className="container mx-auto px-4 py-16">Loading...</div>;
+  if (error) return <div className="container mx-auto px-4 py-16">Error loading content.</div>;
 
-    // Check if it's a post or page (naive check, usually you'd separate queries or use Union types)
-    const contentNode = data?.post || data?.page;
+  // Check if it's a post or page (naive check, usually you'd separate queries or use Union types)
+  const contentNode = data?.post || data?.page;
 
-    if (!contentNode) {
-        return <div className="container mx-auto px-4 py-16">Content not found.</div>;
-    }
+  // Helper to strip shortcodes and clean content
+  const stripShortcodes = (html: string) => {
+    if (!html) return '';
+    return html
+      .replace(/\[\/?(?:vc|vp|rev)[^\]]*\]/g, '') // Remove specific complex shortcodes
+      .replace(/\[[^\]]+\]/g, '') // Remove generic shortcodes
+      .replace(/<p>\s*<\/p>/g, '') // Remove empty paragraphs left behind
+  };
 
-    return (
-        <div className="container mx-auto px-4 py-16">
-            <Helmet>
-                <title>{contentNode.title}</title>
-                {/* If we had SEO fields, we'd map them here */}
-                <meta name="description" content={contentNode.excerpt ? contentNode.excerpt.replace(/<[^>]+>/g, '') : ''} />
-            </Helmet>
+  if (!contentNode) {
+    return <div className="container mx-auto px-4 py-20 text-center text-slate-400">Content not found.</div>;
+  }
 
-            <article>
-                <h1 className="text-4xl font-display font-bold mb-6">{contentNode.title}</h1>
-                {contentNode.date && (
-                    <div className="text-sm text-slate-500 mb-8">
-                        {new Date(contentNode.date).toLocaleDateString()}
-                        {contentNode.author?.node?.name && ` by ${contentNode.author.node.name}`}
-                    </div>
-                )}
-                <SafeHtml content={contentNode.content} />
-            </article>
+  const cleanContent = stripShortcodes(contentNode.content);
+
+  return (
+    <div className="container mx-auto px-4 py-20 max-w-4xl">
+      <Helmet>
+        <title>{contentNode.title} | Chris Slater</title>
+        <meta name="description" content={contentNode.excerpt ? contentNode.excerpt.replace(/<[^>]+>/g, '') : ''} />
+      </Helmet>
+
+      <article>
+        <header className="mb-12 text-center">
+          <h1 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white leading-tight">
+            {contentNode.title}
+          </h1>
+          {contentNode.date && (
+            <div className="flex items-center justify-center gap-4 text-sm text-slate-400">
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                {new Date(contentNode.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+              </span>
+            </div>
+          )}
+        </header>
+
+        <div className="p-8 md:p-12 rounded-2xl glass-panel border border-white/10 bg-slate-900/50">
+          <SafeHtml
+            content={cleanContent}
+            className="prose-invert prose-lg prose-headings:font-display prose-a:text-primary-400 prose-img:rounded-xl"
+          />
         </div>
-    );
+      </article>
+    </div>
+  );
 }

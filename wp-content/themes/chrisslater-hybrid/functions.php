@@ -6,7 +6,11 @@
 // Define constants for the theme version and directory
 define('CHRISSLATER_VERSION', '1.0.0');
 define('CHRISSLATER_THEME_DIR', get_stylesheet_directory());
-define('CHRISSLATER_THEME_URI', get_stylesheet_directory_uri());
+define('CHRISSLATER_THEME_URI', get_template_directory_uri());
+
+// Includes
+require_once CHRISSLATER_THEME_DIR . '/includes/product-seeder.php';
+
 
 /**
  * Enqueue scripts and styles.
