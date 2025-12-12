@@ -1,81 +1,77 @@
-
 import { Helmet } from 'react-helmet-async';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
+import { Circuitry } from '../components/Circuitry';
 
 export default function Services() {
     return (
-        <div className="pb-20">
+        <div className="pb-20 pt-10 relative">
             <Helmet>
                 <title>Services | Chris Slater</title>
-                <meta name="description" content="AI Strategy, Custom Development, and Technical Consulting services." />
+                <meta name="description" content="AI Strategy, Custom Development, and Hybrid Architecture services." />
             </Helmet>
 
-            {/* Page Header */}
-            <section className="bg-slate-900 text-white py-20 px-4 md:px-6 relative overflow-hidden">
-                <div className="absolute inset-0 bg-hero-glow opacity-20 blur-3xl" />
-                <div className="container mx-auto relative z-10 text-center">
-                    <h1 className="text-4xl md:text-5xl font-display font-bold mb-6">Expert Services</h1>
-                    <p className="text-xl text-slate-300 max-w-2xl mx-auto">
-                        Comprehensive solutions to modernize your business with Artificial Intelligence and cutting-edge web technology.
+            <div className="absolute top-0 right-0 -z-10 opacity-30">
+                <div className="w-[500px] h-[500px] bg-primary-500/20 blur-[100px] rounded-full"></div>
+            </div>
+
+            <div className="container mx-auto px-4 md:px-6">
+                <div className="max-w-3xl mb-16">
+                    <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
+                        Engineering Intelligence
+                    </h1>
+                    <p className="text-xl text-slate-400 leading-relaxed">
+                        I don't just build websites; I architect intelligent systems. From strategic AI integration to high-performance hybrid applications, I help you stay ahead of the curve.
                     </p>
                 </div>
-            </section>
 
-            {/* Services Grid */}
-            <section className="container mx-auto px-4 md:px-6 py-16 -mt-10">
                 <div className="grid md:grid-cols-3 gap-8">
-                    <Card
-                        title="AI Strategy & Consulting"
-                        description="Identify high-impact AI use cases for your business. I help you navigate the complex landscape of LLMs, agents, and automation."
-                        className="shadow-xl border-t-4 border-t-primary-500"
-                        footer={<Button variant="outline" className="w-full">Book Consultation</Button>}
-                    >
-                        <ul className="space-y-3 text-slate-600 text-sm mt-4">
-                            <li className="flex items-start gap-2">✓ <span>Workflow Automation Audits</span></li>
-                            <li className="flex items-start gap-2">✓ <span>Custom Model Fine-tuning Plans</span></li>
-                            <li className="flex items-start gap-2">✓ <span>Tech Stack Modernization</span></li>
-                        </ul>
+                    {/* Service 1 */}
+                    <Card className="hover:border-primary-500/50 group">
+                        <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3M3.343 15.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                        </div>
+                        <h3 className="text-xl font-bold font-display text-white mb-3">AI Strategy & Consulting</h3>
+                        <p className="text-slate-400 mb-6 flex-grow">
+                            Identify high-value AI opportunities within your business. I provide roadmaps for integrating LLMs, automations, and intelligent workflows.
+                        </p>
+                        <Button variant="outline" size="sm" className="w-full mt-auto">Learn More</Button>
                     </Card>
 
-                    <Card
-                        title="Custom App Development"
-                        description="Full-stack web applications built with React, Node.js, and modern cloud architecture. Scalable, secure, and fast."
-                        className="shadow-xl border-t-4 border-t-accent-500"
-                        footer={<Button className="w-full">Start a Project</Button>}
-                    >
-                        <ul className="space-y-3 text-slate-600 text-sm mt-4">
-                            <li className="flex items-start gap-2">✓ <span>SaaS Product MVP</span></li>
-                            <li className="flex items-start gap-2">✓ <span>Internal Business Tools</span></li>
-                            <li className="flex items-start gap-2">✓ <span>API Integrations</span></li>
-                        </ul>
+                    {/* Service 2 */}
+                    <Card className="hover:border-primary-500/50 group">
+                        <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        </div>
+                        <h3 className="text-xl font-bold font-display text-white mb-3">Custom App Development</h3>
+                        <p className="text-slate-400 mb-6 flex-grow">
+                            Full-stack development using React, TypeScript, and Node.js. I build scalable, secure, and lightning-fast applications tailored to your needs.
+                        </p>
+                        <Button variant="outline" size="sm" className="w-full mt-auto">View Projects</Button>
                     </Card>
 
-                    <Card
-                        title="WordPress to Hybrid"
-                        description="Transform your legacy WordPress site into a modern Headless or Hybrid architecture without losing your content."
-                        className="shadow-xl border-t-4 border-t-slate-500"
-                        footer={<Button variant="outline" className="w-full">Learn More</Button>}
-                    >
-                        <ul className="space-y-3 text-slate-600 text-sm mt-4">
-                            <li className="flex items-start gap-2">✓ <span>Performance Optimization</span></li>
-                            <li className="flex items-start gap-2">✓ <span>React Frontend Migration</span></li>
-                            <li className="flex items-start gap-2">✓ <span>Secure API Setup</span></li>
-                        </ul>
+                    {/* Service 3 */}
+                    <Card className="hover:border-primary-500/50 group">
+                        <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        </div>
+                        <h3 className="text-xl font-bold font-display text-white mb-3">WordPress to Hybrid</h3>
+                        <p className="text-slate-400 mb-6 flex-grow">
+                            Get the best of both worlds. Keep your easy WordPress backend while upgrading your frontend to a modern, headless React experience.
+                        </p>
+                        <Button variant="outline" size="sm" className="w-full mt-auto">See Process</Button>
                     </Card>
                 </div>
-            </section>
 
-            {/* CTA Section */}
-            <section className="container mx-auto px-4 md:px-6 py-16 text-center">
-                <div className="bg-primary-50 rounded-2xl p-12 border border-primary-100">
-                    <h2 className="text-3xl font-display font-bold text-slate-900 mb-4">Ready to upgrade your workflow?</h2>
-                    <p className="text-slate-600 mb-8 max-w-xl mx-auto">
-                        Whether you need a full technical partner or just a strategic nudge, I'm here to help you build the future.
+                <div className="mt-20 p-8 rounded-2xl bg-white/5 border border-white/10 text-center relative overflow-hidden">
+                    <Circuitry className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" />
+                    <h2 className="text-3xl font-display font-bold text-white mb-4 relative z-10">Ready to transform your digital presence?</h2>
+                    <p className="text-slate-400 mb-8 max-w-2xl mx-auto relative z-10">
+                        Book a free 15-minute discovery call to discuss your project.
                     </p>
-                    <Button size="lg">Contact Me</Button>
+                    <Button size="lg" className="relative z-10">Book Discovery Call</Button>
                 </div>
-            </section>
+            </div>
         </div>
     );
 }
