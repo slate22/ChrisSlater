@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { SEO } from '../components/SEO';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
@@ -7,17 +7,56 @@ import { Circuitry } from '../components/Circuitry';
 export default function Contact() {
     const [submitting, setSubmitting] = useState(false);
     const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { id, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [id]: value
+        }));
+    };
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSubmitting(true);
+        setStatus('idle');
+        setErrorMessage('');
 
-        // Simulation of form submission
-        // In a real WP setup, you'd POST to a CF7 REST endpoint or a custom route
-        setTimeout(() => {
+        try {
+            // Get WordPress REST API URL from wpData
+            const restUrl = (window as any).wpData?.root || '/wp-json/';
+            const endpoint = `${restUrl}chrisslater/v1/contact`;
+
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                setStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+            } else {
+                setStatus('error');
+                setErrorMessage(data.message || 'Failed to send message. Please try again.');
+            }
+        } catch (error) {
+            setStatus('error');
+            setErrorMessage('Network error. Please try again later.');
+            console.error('Contact form error:', error);
+        } finally {
             setSubmitting(false);
-            setStatus('success');
-        }, 1500);
+        }
     };
 
     return (
@@ -79,12 +118,19 @@ export default function Contact() {
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
+                                {status === 'error' && errorMessage && (
+                                    <div className="bg-red-500/10 border border-red-500/50 rounded-lg px-4 py-3 text-red-400">
+                                        {errorMessage}
+                                    </div>
+                                )}
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">Name</label>
                                     <input
                                         type="text"
                                         id="name"
                                         required
+                                        value={formData.name}
+                                        onChange={handleChange}
                                         className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary-500 transition-colors"
                                         placeholder="Your name"
                                     />
@@ -95,6 +141,8 @@ export default function Contact() {
                                         type="email"
                                         id="email"
                                         required
+                                        value={formData.email}
+                                        onChange={handleChange}
                                         className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary-500 transition-colors"
                                         placeholder="you@company.com"
                                     />
@@ -105,6 +153,8 @@ export default function Contact() {
                                         id="message"
                                         required
                                         rows={4}
+                                        value={formData.message}
+                                        onChange={handleChange}
                                         className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary-500 transition-colors"
                                         placeholder="How can I help you?"
                                     ></textarea>

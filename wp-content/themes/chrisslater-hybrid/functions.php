@@ -127,3 +127,85 @@ add_filter('script_loader_tag', 'chrisslater_add_module_type', 10, 3);
 add_theme_support('title-tag');
 add_theme_support('post-thumbnails');
 add_theme_support('menus');
+
+/**
+ * Register REST API endpoint for contact form
+ */
+function chrisslater_register_contact_endpoint() {
+    register_rest_route('chrisslater/v1', '/contact', [
+        'methods' => 'POST',
+        'callback' => 'chrisslater_handle_contact_form',
+        'permission_callback' => '__return_true',
+        'args' => [
+            'name' => [
+                'required' => true,
+                'type' => 'string',
+                'sanitize_callback' => 'sanitize_text_field',
+                'validate_callback' => function($param) {
+                    return !empty($param);
+                }
+            ],
+            'email' => [
+                'required' => true,
+                'type' => 'string',
+                'sanitize_callback' => 'sanitize_email',
+                'validate_callback' => function($param) {
+                    return is_email($param);
+                }
+            ],
+            'message' => [
+                'required' => true,
+                'type' => 'string',
+                'sanitize_callback' => 'sanitize_textarea_field',
+                'validate_callback' => function($param) {
+                    return !empty($param);
+                }
+            ]
+        ]
+    ]);
+}
+add_action('rest_api_init', 'chrisslater_register_contact_endpoint');
+
+/**
+ * Handle contact form submission
+ */
+function chrisslater_handle_contact_form($request) {
+    $name = $request->get_param('name');
+    $email = $request->get_param('email');
+    $message = $request->get_param('message');
+
+    // Recipient email
+    $to = 'chrisslater.ai@gmail.com';
+
+    // Email subject
+    $subject = 'New Contact Form Submission from ' . $name;
+
+    // Email body
+    $body = "You have received a new message from your website contact form.\n\n";
+    $body .= "Name: " . $name . "\n";
+    $body .= "Email: " . $email . "\n\n";
+    $body .= "Message:\n" . $message . "\n";
+
+    // Email headers
+    $headers = [
+        'Content-Type: text/plain; charset=UTF-8',
+        'From: ' . get_bloginfo('name') . ' <wordpress@' . parse_url(get_site_url(), PHP_URL_HOST) . '>',
+        'Reply-To: ' . $name . ' <' . $email . '>'
+    ];
+
+    // Send email
+    $sent = wp_mail($to, $subject, $body, $headers);
+
+    if ($sent) {
+        return new WP_REST_Response([
+            'success' => true,
+            'message' => 'Your message has been sent successfully!'
+        ], 200);
+    } else {
+        return new WP_Error(
+            'email_failed',
+            'Failed to send email. Please try again later.',
+            ['status' => 500]
+        );
+    }
+}
