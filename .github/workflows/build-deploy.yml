@@ -56,7 +56,9 @@ jobs:
           mkdir -p ~/.ssh
           echo "$WPE_SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H git.wpengine.com >> ~/.ssh/known_hosts
+
+          # Use GIT_SSH_COMMAND to ignore host checking (more robust in CI)
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no"
 
           # 2. Configure Git
           git config --global user.email "deploy@github.actions"
