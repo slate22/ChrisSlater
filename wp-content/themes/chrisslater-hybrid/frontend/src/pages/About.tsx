@@ -3,7 +3,7 @@ import { SEO } from '../components/SEO';
 import { Circuitry } from '../components/Circuitry';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
-import aiAbstract from '../assets/images/ai-circuitry.png';
+import aiAbstract from '../assets/images/ai-circuitry.jpg';
 
 export default function About() {
     return (
