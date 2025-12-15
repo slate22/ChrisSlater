@@ -36,12 +36,12 @@ export function Layout({ children }: LayoutProps) {
                     }`}
             >
                 <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-                    <Link to="/" className="text-2xl font-display font-bold text-white tracking-tight flex items-center gap-2">
+                    <a href="/" className="text-2xl font-display font-bold text-white tracking-tight flex items-center gap-2">
                         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
                             <span className="text-white text-sm">CS</span>
                         </div>
                         Chris Slater
-                    </Link>
+                    </a>
 
                     {/* Desktop Nav */}
                     <nav className="hidden md:flex items-center gap-8">

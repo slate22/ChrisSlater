@@ -1,18 +1,22 @@
-import { Helmet } from 'react-helmet-async';
+
+import { SEO } from '../components/SEO';
 import { Circuitry } from '../components/Circuitry';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
+import aiAbstract from '../assets/images/ai-circuitry.png';
 
 export default function About() {
     return (
         <div className="pb-20 pt-10 relative overflow-hidden">
-            <Helmet>
-                <title>About | Chris Slater</title>
-                <meta name="description" content="AI Strategist and Full Stack Developer bridging the gap between human creativity and machine intelligence." />
-            </Helmet>
+            <SEO
+                title="About"
+                description="AI Strategist and Full Stack Developer bridging the gap between human creativity and machine intelligence."
+                url="/about"
+            />
 
-            <div className="absolute top-20 left-0 -z-10 opacity-20">
-                <div className="w-[600px] h-[600px] bg-primary-500/20 blur-[120px] rounded-full"></div>
+            <div className="absolute top-0 left-0 -z-10 opacity-30 w-full h-[800px] pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950 z-10" />
+                <img src={aiAbstract} alt="" className="w-full h-full object-cover opacity-60 mix-blend-screen" />
             </div>
 
             <div className="container mx-auto px-4 md:px-6">

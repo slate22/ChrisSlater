@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '../components/SEO';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Circuitry } from '../components/Circuitry';
@@ -22,10 +22,11 @@ export default function Contact() {
 
     return (
         <div className="pb-20 pt-10 relative">
-            <Helmet>
-                <title>Contact | Chris Slater</title>
-                <meta name="description" content="Get in touch to discuss your AI or web development project." />
-            </Helmet>
+            <SEO
+                title="Contact"
+                description="Get in touch to discuss your AI or web development project."
+                url="/contact"
+            />
 
             <div className="absolute top-0 right-0 -z-10 opacity-30">
                 <div className="w-[500px] h-[500px] bg-accent-500/10 blur-[100px] rounded-full"></div>

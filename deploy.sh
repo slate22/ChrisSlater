@@ -1,5 +1,5 @@
 # Configuration
-WPE_ENV="chrisslaterai"
+WPE_ENV="chrisslater"
 SSH_HOST="$WPE_ENV.ssh.wpengine.net"
 SSH_USER="$WPE_ENV"
 SSH_KEY="./wpe_deploy_key" 

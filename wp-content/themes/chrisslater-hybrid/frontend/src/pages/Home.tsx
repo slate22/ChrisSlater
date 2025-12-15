@@ -1,16 +1,18 @@
 
-import { Helmet } from 'react-helmet-async';
+
+import { SEO } from '../components/SEO';
 import { Hero } from '../components/Hero';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
+import chrisBeach from '../assets/images/chris-beach.png';
 
 export default function Home() {
     return (
         <>
-            <Helmet>
-                <title>Chris Slater | 100x AI Developer</title>
-                <meta name="description" content="Chris Slater - 100x AI Developer building the intelligent future from the Gulf Coast. Expert in AI strategy, React, and Hybrid WordPress solutions." />
-            </Helmet>
+            <SEO
+                title="Chris Slater"
+                url="/"
+            />
 
             <main>
                 <Hero />
@@ -20,11 +22,12 @@ export default function Home() {
                     <div className="container mx-auto px-4 md:px-6">
                         <div className="grid md:grid-cols-2 gap-16 items-center">
                             <div className="relative">
-                                <div className="aspect-square bg-slate-100 rounded-2xl overflow-hidden relative z-10 shadow-2xl rotate-3">
-                                    {/* Placeholder for Chris's Image - Using a gradient for now */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center text-slate-400">
-                                        [Chris Slater Image]
-                                    </div>
+                                <div className="aspect-square rounded-2xl overflow-hidden relative z-10 shadow-2xl rotate-3">
+                                    <img
+                                        src={chrisBeach}
+                                        alt="Chris Slater working on the beach"
+                                        className="w-full h-full object-cover"
+                                    />
                                 </div>
                                 <div className="absolute inset-0 bg-primary-100/50 rounded-2xl -rotate-3 scale-105 z-0" />
                             </div>
@@ -93,15 +96,23 @@ export default function Home() {
                 <section className="py-24 bg-slate-900 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-900 via-slate-900 to-slate-900"></div>
                     <div className="container mx-auto px-4 text-center relative z-10">
+                        <span className="inline-block py-1 px-3 rounded-full bg-primary-500/20 border border-primary-500/40 text-primary-300 text-sm font-bold mb-6 animate-pulse">
+                            New: Custom Agent Builder
+                        </span>
                         <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-8">
-                            Ready to ride the wave?
+                            Build Your Dream <span className="text-gradient">AI Workforce</span>.
                         </h2>
                         <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
-                            Let's discuss how we can leverage AI to transform your business or build your next big idea.
+                            Don't just hire. Architect. Use our new Gemini-powered builder to design custom autonomous agents that can effectively do anything.
                         </p>
-                        <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100 border-none shadow-xl">
-                            Get in Touch
-                        </Button>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Button size="lg" className="shadow-xl shadow-primary-500/20" onClick={() => window.location.href = '/agent-builder'}>
+                                Launch Agent Builder &rarr;
+                            </Button>
+                            <Button size="lg" variant="outline" onClick={() => window.location.href = '/contact'}>
+                                Talk to Chris
+                            </Button>
+                        </div>
                     </div>
                 </section>
             </main>

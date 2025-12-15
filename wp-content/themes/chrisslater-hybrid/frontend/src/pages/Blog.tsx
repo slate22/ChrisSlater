@@ -1,5 +1,5 @@
 import { useQuery, gql } from '@apollo/client';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '../components/SEO';
 import { Link } from 'react-router-dom';
 import { Card } from '../components/Card';
 
@@ -27,10 +27,11 @@ export default function Blog() {
 
     return (
         <div className="pb-20 pt-10">
-            <Helmet>
-                <title>Blog | Chris Slater</title>
-                <meta name="description" content="Insights on AI, Web Development, and Digital Strategy." />
-            </Helmet>
+            <SEO
+                title="Blog"
+                description="Insights on AI, Web Development, and Digital Strategy."
+                url="/blog"
+            />
 
             <div className="absolute top-0 right-0 -z-10 opacity-30">
                 <div className="w-[500px] h-[500px] bg-secondary-500/20 blur-[100px] rounded-full"></div>

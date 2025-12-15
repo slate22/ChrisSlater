@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '../components/SEO';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Circuitry } from '../components/Circuitry';
@@ -7,10 +7,11 @@ import { Circuitry } from '../components/Circuitry';
 export default function Services() {
     return (
         <div className="pb-20 pt-10 relative">
-            <Helmet>
-                <title>Services | Chris Slater</title>
-                <meta name="description" content="AI Strategy, Custom Development, and Hybrid Architecture services." />
-            </Helmet>
+            <SEO
+                title="Services"
+                description="AI Strategy, Custom Development, and Hybrid Architecture services."
+                url="/services"
+            />
 
             <div className="absolute top-0 right-0 -z-10 opacity-30">
                 <div className="w-[500px] h-[500px] bg-primary-500/20 blur-[100px] rounded-full"></div>

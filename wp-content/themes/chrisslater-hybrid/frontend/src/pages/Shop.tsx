@@ -1,5 +1,5 @@
 import { useQuery, gql } from '@apollo/client';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '../components/SEO';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 
@@ -39,10 +39,11 @@ export default function Shop() {
 
   return (
     <div className="pb-20 pt-10">
-      <Helmet>
-        <title>Shop | Chris Slater</title>
-        <meta name="description" content="Digital products and consultation services." />
-      </Helmet>
+      <SEO
+        title="Shop"
+        description="Digital products and consultation services."
+        url="/shop"
+      />
 
       <div className="absolute top-0 left-0 -z-10 opacity-30">
         <div className="w-[500px] h-[500px] bg-primary-500/20 blur-[100px] rounded-full"></div>

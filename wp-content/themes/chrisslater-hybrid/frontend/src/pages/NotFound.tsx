@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '../components/SEO';
 import { Button } from '../components/Button';
 
 export default function NotFound() {
     return (
         <div className="min-h-[60vh] flex items-center justify-center text-center px-4">
-            <Helmet>
-                <title>404 - Page Not Found | Chris Slater</title>
-                <meta name="robots" content="noindex" />
-            </Helmet>
+            <SEO
+                title="404 - Page Not Found"
+                noindex={true}
+            />
 
             <div className="max-w-md">
                 <div className="text-9xl font-display font-bold text-slate-200 mb-4 select-none">404</div>

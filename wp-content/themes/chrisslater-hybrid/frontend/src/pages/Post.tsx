@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '../components/SEO';
 import { SafeHtml } from '../components/SafeHtml';
 
 const GET_POST = gql`
@@ -10,15 +10,24 @@ const GET_POST = gql`
       content
       excerpt
       date
+      featuredImage {
+        node {
+          sourceUrl
+        }
+      }
       author {
         node {
           name
         }
       }
     }
-    page(id: $slug, idType: URI) {
         title
         content
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
     }
   }
 `;
@@ -52,10 +61,15 @@ export default function Post() {
 
   return (
     <div className="container mx-auto px-4 py-20 max-w-4xl">
-      <Helmet>
-        <title>{contentNode.title} | Chris Slater</title>
-        <meta name="description" content={contentNode.excerpt ? contentNode.excerpt.replace(/<[^>]+>/g, '') : ''} />
-      </Helmet>
+      <SEO
+        title={contentNode.title}
+        description={contentNode.excerpt ? contentNode.excerpt.replace(/<[^>]+>/g, '') : ''}
+        image={contentNode.featuredImage?.node?.sourceUrl}
+        url={`/${slug}`}
+        type="article"
+        publishedTime={contentNode.date}
+        author={contentNode.author?.node?.name}
+      />
 
       <article>
         <header className="mb-12 text-center">
