@@ -41,12 +41,40 @@ jobs:
 
       # OPTIONAL: Deploy to WP Engine (Requires Secrets)
       # Uncomment and configure if using GitHub Actions to deploy
-      - name: Deploy to WP Engine
-        uses: wpengine/github-action-wpe-site-deploy@v3
-        with:
-          WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSH_KEY_PRIVATE }}
+      # Manual RSYNC Deployment for maximum control and debugging
+      - name: Deploy to WP Engine (Manual Rsync)
+        env:
+          WPE_SSH_KEY: ${{ secrets.WPE_SSH_KEY_PRIVATE }}
           WPE_ENV: chrisslaterai
-          SRC_PATH: "wp-content/themes/chrisslater-hybrid/"
-          REMOTE_PATH: "wp-content/themes/chrisslater-hybrid"
-          PHP_LINT: FALSE
-          FLAGS: "-avzr --delete --exclude=node_modules"
+        run: |
+          if [ -z "$WPE_SSH_KEY" ]; then
+            echo "::error::WPE_SSH_KEY_PRIVATE secret is not set! Please add it to GitHub Repo Settings."
+            exit 1
+          fi
+
+          # Setup SSH Key
+          mkdir -p ~/.ssh
+          echo "$WPE_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          # Add WPE host to known_hosts to avoid interactive prompt
+          ssh-keyscan -H "$WPE_ENV.ssh.wpengine.net" >> ~/.ssh/known_hosts
+
+          echo "🚀 Starting Rsync to $WPE_ENV..."
+
+          # Deploy using rsync
+          # -a: archive mode
+          # -v: verbose
+          # -z: compress
+          # --delete: remove files on destination that aren't in source
+          # --exclude: skip node_modules and git
+
+          rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            --exclude 'node_modules' \
+            --exclude '.git' \
+            --exclude '.github' \
+            wp-content/themes/chrisslater-hybrid/ \
+            $WPE_ENV@$WPE_ENV.ssh.wpengine.net:sites/$WPE_ENV/wp-content/themes/chrisslater-hybrid/
+
+          echo "✅ Deployment Complete"
