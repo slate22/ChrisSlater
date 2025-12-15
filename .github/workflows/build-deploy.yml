@@ -41,40 +41,48 @@ jobs:
 
       # OPTIONAL: Deploy to WP Engine (Requires Secrets)
       # Uncomment and configure if using GitHub Actions to deploy
-      # Manual RSYNC Deployment for maximum control and debugging
-      - name: Deploy to WP Engine (Manual Rsync)
+      # Git Deployment Method (Consistent with WP Engine documentation)
+      - name: Deploy to WP Engine (Git Push)
         env:
           WPE_SSH_KEY: ${{ secrets.WPE_SSH_KEY_PRIVATE }}
-          WPE_ENV: chrisslaterai
+          WPE_GIT_REMOTE: "git@git.wpengine.com:production/chrisslaterai.git"
         run: |
           if [ -z "$WPE_SSH_KEY" ]; then
-            echo "::error::WPE_SSH_KEY_PRIVATE secret is not set! Please add it to GitHub Repo Settings."
+            echo "::error::WPE_SSH_KEY_PRIVATE secret is not set!"
             exit 1
           fi
 
-          # Setup SSH Key
+          # 1. Setup SSH Key
           mkdir -p ~/.ssh
           echo "$WPE_SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H git.wpengine.com >> ~/.ssh/known_hosts
 
-          # Add WPE host to known_hosts to avoid interactive prompt
-          ssh-keyscan -H "$WPE_ENV.ssh.wpengine.net" >> ~/.ssh/known_hosts
+          # 2. Configure Git
+          git config --global user.email "deploy@github.actions"
+          git config --global user.name "GitHub Actions Helper"
 
-          echo "🚀 Starting Rsync to $WPE_ENV..."
+          # 3. Add WPE Remote
+          # We check if it exists, though in a fresh runner it won't.
+          git remote add wpe "$WPE_GIT_REMOTE"
 
-          # Deploy using rsync
-          # -a: archive mode
-          # -v: verbose
-          # -z: compress
-          # --delete: remove files on destination that aren't in source
-          # --exclude: skip node_modules and git
+          # 4. Stage Build Artifacts
+          # The checkout action uses a detached HEAD. We branch off to commit.
+          git checkout -b deploy-branch
 
-          rsync -avz --delete \
-            -e "ssh -o StrictHostKeyChecking=no" \
-            --exclude 'node_modules' \
-            --exclude '.git' \
-            --exclude '.github' \
-            wp-content/themes/chrisslater-hybrid/ \
-            $WPE_ENV@$WPE_ENV.ssh.wpengine.net:sites/$WPE_ENV/wp-content/themes/chrisslater-hybrid/
+          echo "📦 Staging build artifacts and theme files..."
+          # Force add dist folder (ignored by .gitignore)
+          git add -f wp-content/themes/chrisslater-hybrid/frontend/dist
 
-          echo "✅ Deployment Complete"
+          # Add other theme files
+          git add wp-content/themes/chrisslater-hybrid
+
+          # 5. Commit and Push
+          git commit -m "Deploy: GitHub Actions Build ${GITHUB_SHA::7}"
+
+          echo "🚀 Pushing to WP Engine..."
+          # Force push to master/main on WPE. WPE uses 'master' or 'main' usually. 
+          # We'll push our current branch to 'main' on remote.
+          git push -f wpe deploy-branch:main
+
+          echo "✅ Git Deployment Complete"
