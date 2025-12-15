@@ -46,6 +46,7 @@ jobs:
         with:
           WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSH_KEY_PRIVATE }}
           WPE_ENV: chrisslaterai
-          SRC_PATH: "wp-content/themes/chrisslater-hybrid"
+          SRC_PATH: "wp-content/themes/chrisslater-hybrid/"
           REMOTE_PATH: "wp-content/themes/chrisslater-hybrid"
-          PHP_LINT: FALSE # Optional: Disable if causing false positives on template files
+          PHP_LINT: FALSE
+          FLAGS: "-avzr --delete --exclude=node_modules"
