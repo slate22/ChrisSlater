@@ -38,8 +38,6 @@ jobs:
           # Let's verify the build output exists
           ls -la wp-content/themes/chrisslater-hybrid/frontend/dist
 
-      # OPTIONAL: Deploy to WP Engine (Requires Secrets)
-      # Uncomment and configure if using GitHub Actions to deploy
       - name: Deploy to WP Engine
         uses: wpengine/github-action-wpe-site-deploy@v3
         with:
@@ -47,4 +45,4 @@ jobs:
           WPE_ENV: chrisslater
           SRC_PATH: "wp-content/themes/chrisslater-hybrid"
           REMOTE_PATH: "wp-content/themes/chrisslater-hybrid"
-          PHP_LINT: FALSE # Optional: Disable if causing false positives on template files
+          PHP_LINT: FALSE
