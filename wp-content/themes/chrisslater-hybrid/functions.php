@@ -83,14 +83,14 @@ function chrisslater_scripts() {
                  $css_files = glob($assets_dir . '/*.css');
                  if (!empty($css_files)) {
                      $css_file_name = basename($css_files[0]);
-                     wp_enqueue_style('chrisslater-fallback-style', CHRISSLATER_THEME_URI . $vite_dist_path . '/assets/' . $css_file_name, [], CHRISSLATER_VERSION);
+                     wp_enqueue_style('chrisslater-fallback-style', get_stylesheet_directory_uri() . $vite_dist_path . '/assets/' . $css_file_name, [], CHRISSLATER_VERSION);
                  }
                  
                  // Fallback JS loading
                  $js_files = glob($assets_dir . '/*.js');
                  if (!empty($js_files)) {
                      $js_file_name = basename($js_files[0]);
-                     wp_enqueue_script('chrisslater-app', CHRISSLATER_THEME_URI . $vite_dist_path . '/assets/' . $js_file_name, [], CHRISSLATER_VERSION, true);
+                     wp_enqueue_script('chrisslater-app', get_stylesheet_directory_uri() . $vite_dist_path . '/assets/' . $js_file_name, [], CHRISSLATER_VERSION, true);
                  }
             }
         }
