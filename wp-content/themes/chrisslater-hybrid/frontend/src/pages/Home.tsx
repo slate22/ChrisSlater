@@ -4,7 +4,7 @@ import { SEO } from '../components/SEO';
 import { Hero } from '../components/Hero';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
-import chrisBeach from '../assets/images/chris-beach-laptop.png';
+import chrisBeach from '../assets/images/chris-beach.jpg';
 
 export default function Home() {
     return (
