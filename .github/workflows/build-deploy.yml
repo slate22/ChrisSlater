@@ -43,20 +43,9 @@ jobs:
           # 3. Add WPE Remote
           git remote add wpe "$WPE_GIT_REMOTE"
 
-          # 4. Stage Build Artifacts
-          git checkout -b deploy-branch
-
-          echo "🔍 Verifying build artifacts..."
-          ls -la wp-content/themes/chrisslater-hybrid/frontend/dist
-
-          echo "📦 Staging build artifacts and theme files..."
-          git add -f wp-content/themes/chrisslater-hybrid/frontend/dist
-          git add wp-content/themes/chrisslater-hybrid
-
-          # 5. Commit and Push
-          git commit -m "Deploy: GitHub Actions Build ${GITHUB_SHA::7}"
-
-          echo "🚀 Pushing to WP Engine..."
-          git push -v -f wpe deploy-branch:main
+          # 4. Push to WP Engine
+          # Since the artifacts are now in the repo, we can just push the current branch (main)
+          echo "🚀 Syncing with WP Engine..."
+          git push -v -f wpe main:main
 
           echo "✅ Git Deployment Complete"
