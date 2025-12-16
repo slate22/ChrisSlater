@@ -4,6 +4,7 @@ import { Circuitry } from '../components/Circuitry';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import aiAbstract from '../assets/images/ai-circuitry.jpg';
+import chrisInterior from '../assets/images/chris-interior.png';
 
 export default function About() {
     return (
@@ -26,9 +27,7 @@ export default function About() {
                             <div className="relative w-64 h-64">
                                 <div className="absolute inset-0 bg-primary-500/20 rounded-full blur-2xl animate-pulse"></div>
                                 <div className="relative w-full h-full rounded-2xl overflow-hidden glass-panel border border-white/20 flex items-center justify-center">
-                                    <span className="text-6xl font-bold text-white/20">CS</span>
-                                    {/* Ideally replace with real headshot */}
-                                    {/* <img src="/path/to/headshot.jpg" alt="Chris Slater" className="w-full h-full object-cover" /> */}
+                                    <img src={chrisInterior} alt="Chris Slater" className="w-full h-full object-cover" />
                                 </div>
                             </div>
                         </div>
