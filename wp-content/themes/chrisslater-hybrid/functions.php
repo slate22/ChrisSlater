@@ -80,10 +80,17 @@ function chrisslater_scripts() {
             // EMERGENCY FALLBACK: Look for any .css file in dist/assets
             $assets_dir = CHRISSLATER_THEME_DIR . $vite_dist_path . '/assets';
             if (is_dir($assets_dir)) {
-                 $files = glob($assets_dir . '/*.css');
-                 if (!empty($files)) {
-                     $css_file_name = basename($files[0]);
+                 $css_files = glob($assets_dir . '/*.css');
+                 if (!empty($css_files)) {
+                     $css_file_name = basename($css_files[0]);
                      wp_enqueue_style('chrisslater-fallback-style', CHRISSLATER_THEME_URI . $vite_dist_path . '/assets/' . $css_file_name, [], CHRISSLATER_VERSION);
+                 }
+                 
+                 // Fallback JS loading
+                 $js_files = glob($assets_dir . '/*.js');
+                 if (!empty($js_files)) {
+                     $js_file_name = basename($js_files[0]);
+                     wp_enqueue_script('chrisslater-app', CHRISSLATER_THEME_URI . $vite_dist_path . '/assets/' . $js_file_name, [], CHRISSLATER_VERSION, true);
                  }
             }
         }
