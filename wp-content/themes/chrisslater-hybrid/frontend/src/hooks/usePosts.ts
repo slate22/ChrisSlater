@@ -46,9 +46,29 @@ export function usePosts() {
                 }
 
                 const data = await response.json();
-                setPosts(data);
+                console.log('SafeWordPressData: Raw Response:', data); // LOGGING DATA
+
+                if (Array.isArray(data)) {
+                    setPosts(data);
+                } else {
+                    console.warn('SafeWordPressData: Received non-array data', data);
+                    setPosts([]);
+                }
+
             } catch (err: any) {
-                console.error('Failed to fetch posts:', err);
+                console.error('SafeWordPressData: Failed to fetch posts:', err);
+
+                // FALLBACK POST as requested
+                setPosts([{
+                    id: 9999,
+                    date: new Date().toISOString(),
+                    slug: 'fallback-post',
+                    title: { rendered: 'Fallback: Connection Issue' },
+                    excerpt: { rendered: 'We are experiencing trouble connecting to the backend. This is a safe fallback.' },
+                    content: { rendered: 'Fallback content.' },
+                    _embedded: undefined
+                }]);
+
                 setError(err.message);
             } finally {
                 setLoading(false);
