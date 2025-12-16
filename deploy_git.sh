@@ -24,11 +24,16 @@ if ! git remote | grep -q "wpe"; then
     git remote add wpe "$REMOTE"
 fi
 
-# Force add the build artifacts (often ignored)
+# Create a temporary deploy branch
+DEPLOY_BRANCH="deploy-$(date +%s)"
+echo "🔀 Creating temporary deploy branch: $DEPLOY_BRANCH"
+git checkout -b "$DEPLOY_BRANCH"
+
+# Force add the build artifacts
 echo "📦 Staging build artifacts..."
 git add -f wp-content/themes/chrisslater-hybrid/frontend/dist
 
-# Add everything else
+# Add everything else (in case there are uncommitted changes needed for deploy)
 git add .
 
 # Commit
@@ -37,6 +42,11 @@ git commit -m "Deploy: Antigravity Auto-Deploy" || echo "No changes to commit"
 
 # Push
 echo "⬆️ Pushing to WP Engine..."
-git push wpe main
+git push -f wpe "$DEPLOY_BRANCH:main"
+
+# Cleanup
+echo "🧹 Cleaning up..."
+git checkout main
+git branch -D "$DEPLOY_BRANCH"
 
 echo "✅ Git Deployment Complete!"
