@@ -4,6 +4,7 @@ wpe_deploy_key
 *.key
 id_rsa
 id_ed25519
+wpe_private_key_backup.txt
 
 # Environment files
 .env
