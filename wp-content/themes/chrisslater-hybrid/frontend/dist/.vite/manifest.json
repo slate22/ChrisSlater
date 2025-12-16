@@ -4,12 +4,12 @@
     "src": "src/assets/images/ai-circuitry.jpg"
   },
   "src/main.tsx": {
-    "file": "assets/main-BK7uA5nm.js",
+    "file": "assets/main-VX78zpia.js",
     "name": "main",
     "src": "src/main.tsx",
     "isEntry": true,
     "css": [
-      "assets/main-Dgui-CdK.css"
+      "assets/main-DYIywDYP.css"
     ],
     "assets": [
       "assets/ai-circuitry-DuphMH78.jpg"
