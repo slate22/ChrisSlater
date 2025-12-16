@@ -54,37 +54,34 @@ jobs:
 
           # 1. Setup SSH Key
           mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
           echo "$WPE_SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-          # Use GIT_SSH_COMMAND to ignore host checking (more robust in CI)
-          export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no"
+          # Use GIT_SSH_COMMAND to ignore host checking
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o IdentitiesOnly=yes"
 
           # 2. Configure Git
           git config --global user.email "deploy@github.actions"
           git config --global user.name "GitHub Actions Helper"
 
           # 3. Add WPE Remote
-          # We check if it exists, though in a fresh runner it won't.
           git remote add wpe "$WPE_GIT_REMOTE"
 
           # 4. Stage Build Artifacts
-          # The checkout action uses a detached HEAD. We branch off to commit.
           git checkout -b deploy-branch
 
-          echo "📦 Staging build artifacts and theme files..."
-          # Force add dist folder (ignored by .gitignore)
-          git add -f wp-content/themes/chrisslater-hybrid/frontend/dist
+          echo "🔍 Verifying build artifacts..."
+          ls -la wp-content/themes/chrisslater-hybrid/frontend/dist
 
-          # Add other theme files
+          echo "📦 Staging build artifacts and theme files..."
+          git add -f wp-content/themes/chrisslater-hybrid/frontend/dist
           git add wp-content/themes/chrisslater-hybrid
 
           # 5. Commit and Push
           git commit -m "Deploy: GitHub Actions Build ${GITHUB_SHA::7}"
 
           echo "🚀 Pushing to WP Engine..."
-          # Force push to master/main on WPE. WPE uses 'master' or 'main' usually. 
-          # We'll push our current branch to 'main' on remote.
-          git push -f wpe deploy-branch:main
+          git push -v -f wpe deploy-branch:main
 
           echo "✅ Git Deployment Complete"
