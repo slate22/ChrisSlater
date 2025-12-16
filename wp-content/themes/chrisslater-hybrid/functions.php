@@ -100,4 +100,35 @@ add_filter('script_loader_tag', 'chrisslater_add_module_type', 10, 3);
 // Theme Support
 add_theme_support('title-tag');
 add_theme_support('post-thumbnails');
-add_theme_support('menus');
+// Custom REST API Endpoint for Contact Form
+add_action('rest_api_init', function () {
+    register_rest_route('chrisslater/v1', '/contact', [
+        'methods' => 'POST',
+        'callback' => 'chrisslater_handle_contact',
+        'permission_callback' => '__return_true', // Validation handled inside
+    ]);
+});
+
+function chrisslater_handle_contact($request) {
+    $params = $request->get_json_params();
+    $name = sanitize_text_field($params['name'] ?? '');
+    $email = sanitize_email($params['email'] ?? '');
+    $message = sanitize_textarea_field($params['message'] ?? '');
+
+    if (empty($name) || empty($email) || empty($message)) {
+        return new WP_Error('missing_fields', 'Please fill in all required fields.', ['status' => 400]);
+    }
+
+    $to = get_option('admin_email');
+    $subject = "New Contact via ChrisSlater.ai from $name";
+    $body = "Name: $name\nEmail: $email\n\nMessage:\n$message";
+    $headers = ['Content-Type: text/plain; charset=UTF-8', "Reply-To: $name <$email>"];
+
+    $sent = wp_mail($to, $subject, $body, $headers);
+
+    if ($sent) {
+        return new WP_REST_Response(['message' => 'Message sent successfully.'], 200);
+    } else {
+        return new WP_Error('email_failed', 'Failed to send email.', ['status' => 500]);
+    }
+}

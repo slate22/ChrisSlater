@@ -11,13 +11,41 @@ export default function Contact() {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSubmitting(true);
+        setStatus('idle');
 
-        // Simulation of form submission
-        // In a real WP setup, you'd POST to a CF7 REST endpoint or a custom route
-        setTimeout(() => {
-            setSubmitting(false);
+        // Get form data
+        const formData = new FormData(e.currentTarget);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            message: formData.get('message'),
+        };
+
+        try {
+            // Use wpData.root (REST URL) + our custom endpoint
+            const root = (window as any).wpData?.root || '/wp-json/';
+            const endpoint = `${root}chrisslater/v1/contact`;
+
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-WP-Nonce': (window as any).wpData?.nonce || '',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
             setStatus('success');
-        }, 1500);
+        } catch (error) {
+            console.error('Contact error:', error);
+            setStatus('error');
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
