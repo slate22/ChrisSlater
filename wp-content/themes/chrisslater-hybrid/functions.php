@@ -18,101 +18,49 @@ require_once CHRISSLATER_THEME_DIR . '/includes/product-seeder.php';
 function chrisslater_scripts() {
     $vite_server = 'http://localhost:5173';
     $vite_dist_path = '/frontend/dist';
+    
+    // Auto-detect dev mode if local, otherwise prod
     $is_development = (defined('WP_ENVIRONMENT_TYPE') && WP_ENVIRONMENT_TYPE === 'local');
 
-    // If you want to rely on a file check instead of a constant:
-    // $is_development = false; // logic to check if vite is running could go here, or manual switch.
-    // For this setup, let's assume if the fastify/transpiler isn't found, we default to manifest, 
-    // but better to explicitly set via constant or use a "hot" file check.
-    
-    // Quick check: if we can reach the dev server, use it? No, that's slow.
-    // Let's rely on a helper function or constant.
-    // For now, I'll default to searching for the manifest, if not found, assume dev?
-    // Or better: Checking for a specific 'hot' file logic is common in Laravel/Vite, 
-    // but here let's stick to a manual toggle or environment check.
-    
-    // Let's assume we use WP_ENVIRONMENT_TYPE 'local' for dev mode.
-    
-    if ($is_development) {
-        // Enqueue Vite Client
+    if ($is_development) { 
+        // ... (Dev logic remains if needed, but we are fixing prod)
         wp_enqueue_script('vite-client', $vite_server . '/@vite/client', [], null, true);
-        
-        // Enqueue Main Entry
-        // Vite entry is usually at /src/main.tsx relative to the vite root
-        // In our structure: frontend/src/main.tsx. 
-        // Vite serves files relative to its root 'frontend'.
         wp_enqueue_script('vite-main', $vite_server . '/src/main.tsx', [], null, true);
-        
-        // In dev, CSS is injected by JS.
     } else {
-        // Production: Parse manifest
+        // PRODUCTION MODE
+        // 1. Try modern Vite 5 manifest location
         $manifest_path = CHRISSLATER_THEME_DIR . $vite_dist_path . '/.vite/manifest.json';
         
-        if (!file_exists($manifest_path)) {
-            // Fallback try legacy manifest location
-             $manifest_path = CHRISSLATER_THEME_DIR . $vite_dist_path . '/manifest.json';
-        }
-
         if (file_exists($manifest_path)) {
             $manifest = json_decode(file_get_contents($manifest_path), true);
+            $entry = $manifest['src/main.tsx'] ?? null;
             
-            // "src/main.tsx" is the key in manifest
-            $entry_key = 'src/main.tsx';
-            
-            if (isset($manifest[$entry_key])) {
-                $entry = $manifest[$entry_key];
+            if ($entry) {
+                // Enqueue Main JS
+                $js_url = CHRISSLATER_THEME_URI . $vite_dist_path . '/' . $entry['file'];
+                wp_enqueue_script('chrisslater-app', $js_url, [], CHRISSLATER_VERSION, true);
                 
-                // Enqueue JS
-                $js_file = CHRISSLATER_THEME_URI . $vite_dist_path . '/' . $entry['file'];
-                wp_enqueue_script('chrisslater-app', $js_file, [], CHRISSLATER_VERSION, true);
-                
-                // Enqueue CSS
+                // Enqueue Main CSS
                 if (!empty($entry['css'])) {
                     foreach ($entry['css'] as $css_file) {
-                        wp_enqueue_style('chrisslater-style-' . basename($css_file), CHRISSLATER_THEME_URI . $vite_dist_path . '/' . $css_file, [], CHRISSLATER_VERSION);
+                        $css_url = CHRISSLATER_THEME_URI . $vite_dist_path . '/' . $css_file;
+                        wp_enqueue_style('chrisslater-style', $css_url, [], CHRISSLATER_VERSION);
                     }
                 }
-            }
-        } else {
-            // Debugging: Log if manifest is missing (visible in source if WP_DEBUG is on, or check logs)
-            error_log('ChrisSlater Theme: Manifest not found at ' . $manifest_path);
-            
-            // EMERGENCY FALLBACK: Look for any .css file in dist/assets
-            $assets_dir = CHRISSLATER_THEME_DIR . $vite_dist_path . '/assets';
-            if (is_dir($assets_dir)) {
-                 $css_files = glob($assets_dir . '/*.css');
-                 if (!empty($css_files)) {
-                     $css_file_name = basename($css_files[0]);
-                     wp_enqueue_style('chrisslater-fallback-style', get_stylesheet_directory_uri() . $vite_dist_path . '/assets/' . $css_file_name, [], CHRISSLATER_VERSION);
-                 }
-                 
-                 // Fallback JS loading
-                 $js_files = glob($assets_dir . '/*.js');
-                 if (!empty($js_files)) {
-                     $js_file_name = basename($js_files[0]);
-                     wp_enqueue_script('chrisslater-app', get_stylesheet_directory_uri() . $vite_dist_path . '/assets/' . $js_file_name, [], CHRISSLATER_VERSION, true);
-                 }
             }
         }
     }
     
-    // Pass initial data to React
-    wp_localize_script('vite-main', 'wpData', [
+    // Localize Data
+    $data = [
         'root' => esc_url_raw(rest_url()),
         'nonce' => wp_create_nonce('wp_rest'),
         'siteName' => get_bloginfo('name'),
-        'siteUrl' => get_site_url(),
         'graphqlUrl' => site_url('/graphql'),
-    ]); 
-    // Also localize for the prod script handle if changed
-    wp_localize_script('chrisslater-app', 'wpData', [
-        'root' => esc_url_raw(rest_url()),
-        'nonce' => wp_create_nonce('wp_rest'),
-        'siteName' => get_bloginfo('name'),
-        'siteUrl' => get_site_url(),
-        'graphqlUrl' => site_url('/graphql'),
-    ]);
-
+    ];
+    
+    wp_localize_script('vite-main', 'wpData', $data);
+    wp_localize_script('chrisslater-app', 'wpData', $data);
 }
 add_action('wp_enqueue_scripts', 'chrisslater_scripts');
 
