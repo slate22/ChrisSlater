@@ -48,6 +48,25 @@ function chrisslater_scripts() {
                     }
                 }
             }
+        } else {
+             // FALLBACK: If manifest is unreadable (e.g. .vite permissions), scan assets dir
+             $assets_dir = CHRISSLATER_THEME_DIR . $vite_dist_path . '/assets';
+             
+             if (is_dir($assets_dir)) {
+                 // Load first .css found
+                 $css_files = glob($assets_dir . '/*.css');
+                 if (!empty($css_files)) {
+                     $css_file_name = basename($css_files[0]);
+                     wp_enqueue_style('chrisslater-fallback-style', CHRISSLATER_THEME_URI . $vite_dist_path . '/assets/' . $css_file_name, [], CHRISSLATER_VERSION);
+                 }
+                 
+                 // Load first .js found
+                 $js_files = glob($assets_dir . '/*.js');
+                 if (!empty($js_files)) {
+                     $js_file_name = basename($js_files[0]);
+                     wp_enqueue_script('chrisslater-app', CHRISSLATER_THEME_URI . $vite_dist_path . '/assets/' . $js_file_name, [], CHRISSLATER_VERSION, true);
+                 }
+             }
         }
     }
     
