@@ -8,7 +8,7 @@ export function Hero() {
             {/* Dynamic Background */}
             <div className="absolute inset-0 bg-slate-950">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(79,70,229,0.15),transparent_50%)]"></div>
-                <Circuitry className="absolute inset-0 opacity-20 text-primary-500" />
+                <Circuitry className="absolute inset-0 opacity-40 text-primary-500" preserveAspectRatio="xMidYMid slice" />
             </div>
 
             <div className="container relative z-10 px-4 md:px-6 text-center max-w-5xl mx-auto">
