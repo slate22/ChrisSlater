@@ -3,15 +3,20 @@
     "file": "assets/ai-circuitry-DuphMH78.jpg",
     "src": "src/assets/images/ai-circuitry.jpg"
   },
+  "src/assets/images/chris-beach.jpg": {
+    "file": "assets/chris-beach-DOeeOAqt.jpg",
+    "src": "src/assets/images/chris-beach.jpg"
+  },
   "src/main.tsx": {
-    "file": "assets/main-VX78zpia.js",
+    "file": "assets/main-CxJNPpKW.js",
     "name": "main",
     "src": "src/main.tsx",
     "isEntry": true,
     "css": [
-      "assets/main-DYIywDYP.css"
+      "assets/main-BJQMBZ9V.css"
     ],
     "assets": [
+      "assets/chris-beach-DOeeOAqt.jpg",
       "assets/ai-circuitry-DuphMH78.jpg"
     ]
   }
