@@ -21,13 +21,15 @@ const GET_POST = gql`
         }
       }
     }
-        title
-        content
-        featuredImage {
-          node {
-            sourceUrl
-          }
+    page(id: $slug, idType: URI) {
+      title
+      content
+      date
+      featuredImage {
+        node {
+          sourceUrl
         }
+      }
     }
   }
 `;

@@ -1,6 +1,8 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 
 export const client = new ApolloClient({
-    uri: (window as any).wpData?.graphqlUrl || 'http://localhost:8000/graphql', // Fallback for local dev
+    link: new HttpLink({
+        uri: (window as any).wpData?.graphqlUrl || 'https://secure.allcleardigital.com/graphql',
+    }),
     cache: new InMemoryCache(),
 });
