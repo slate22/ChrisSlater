@@ -4,6 +4,7 @@ import { Circuitry } from '../components/Circuitry';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import aiAbstract from '../assets/images/ai-circuitry.jpg';
+import chrisPalm from '../assets/images/chris-palm.png';
 
 export default function About() {
     return (
@@ -26,9 +27,7 @@ export default function About() {
                             <div className="relative w-64 h-64">
                                 <div className="absolute inset-0 bg-primary-500/20 rounded-full blur-2xl animate-pulse"></div>
                                 <div className="relative w-full h-full rounded-2xl overflow-hidden glass-panel border border-white/20 flex items-center justify-center">
-                                    <span className="text-6xl font-bold text-white/20">CS</span>
-                                    {/* Ideally replace with real headshot */}
-                                    {/* <img src="/path/to/headshot.jpg" alt="Chris Slater" className="w-full h-full object-cover" /> */}
+                                    <img src={chrisPalm} alt="Chris Slater" className="w-full h-full object-cover" />
                                 </div>
                             </div>
                         </div>
@@ -40,7 +39,7 @@ export default function About() {
                                 I am an AI Strategist and Full Stack Developer obsessed with the intersection of code, content, and cognitive computing.
                             </p>
                             <p className="text-slate-400 leading-relaxed">
-                                For over a decade, I've built digital products that solve real problems. Now, I leverage Generative AI to architect systems that don't just function—they think, adapt, and scale. My mission is to help businesses transition from static web presences to dynamic, intelligent ecosystems.
+                                Over 2 decades, I've built digital products that solve real problems. Now, I leverage Generative AI to architect systems that don't just function—they think, adapt, and scale. My mission is to help businesses transition from static web presences to dynamic, intelligent ecosystems.
                             </p>
                         </div>
                     </div>

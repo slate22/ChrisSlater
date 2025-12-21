@@ -7,8 +7,12 @@
     "file": "assets/chris-beach-DOeeOAqt.jpg",
     "src": "src/assets/images/chris-beach.jpg"
   },
+  "src/assets/images/chris-palm.png": {
+    "file": "assets/chris-palm-4i1bm4sb.png",
+    "src": "src/assets/images/chris-palm.png"
+  },
   "src/main.tsx": {
-    "file": "assets/main-CnCGHKei.js",
+    "file": "assets/main-DFz0erI4.js",
     "name": "main",
     "src": "src/main.tsx",
     "isEntry": true,
@@ -17,7 +21,8 @@
     ],
     "assets": [
       "assets/chris-beach-DOeeOAqt.jpg",
-      "assets/ai-circuitry-DuphMH78.jpg"
+      "assets/ai-circuitry-DuphMH78.jpg",
+      "assets/chris-palm-4i1bm4sb.png"
     ]
   }
 }
