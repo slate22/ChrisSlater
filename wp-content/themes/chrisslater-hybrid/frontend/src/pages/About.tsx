@@ -4,7 +4,7 @@ import { Circuitry } from '../components/Circuitry';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import aiAbstract from '../assets/images/ai-circuitry.jpg';
-import chrisPalm from '../assets/images/chris-palm.png';
+import chrisPalm from '../assets/images/chris-palm-v2.png';
 
 export default function About() {
     return (

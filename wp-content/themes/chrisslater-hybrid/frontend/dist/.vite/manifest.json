@@ -7,22 +7,22 @@
     "file": "assets/chris-beach-DOeeOAqt.jpg",
     "src": "src/assets/images/chris-beach.jpg"
   },
-  "src/assets/images/chris-palm.png": {
-    "file": "assets/chris-palm-4i1bm4sb.png",
-    "src": "src/assets/images/chris-palm.png"
+  "src/assets/images/chris-palm-v2.png": {
+    "file": "assets/chris-palm-v2-B81xstFB.png",
+    "src": "src/assets/images/chris-palm-v2.png"
   },
   "src/main.tsx": {
-    "file": "assets/main-DFz0erI4.js",
+    "file": "assets/main-Bw5PVEYE.js",
     "name": "main",
     "src": "src/main.tsx",
     "isEntry": true,
     "css": [
-      "assets/main-Cc_oTfqH.css"
+      "assets/main-DUDfUXFf.css"
     ],
     "assets": [
       "assets/chris-beach-DOeeOAqt.jpg",
       "assets/ai-circuitry-DuphMH78.jpg",
-      "assets/chris-palm-4i1bm4sb.png"
+      "assets/chris-palm-v2-B81xstFB.png"
     ]
   }
 }
