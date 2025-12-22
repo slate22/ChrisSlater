@@ -29,41 +29,111 @@ export default function Services() {
 
                 <div className="grid md:grid-cols-3 gap-8">
                     {/* Service 1 */}
-                    <Card className="hover:border-primary-500/50 group">
+                    <Card className="hover:border-primary-500/50 group flex flex-col">
                         <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3M3.343 15.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                            <span className="text-2xl">🤖</span>
                         </div>
                         <h3 className="text-xl font-bold font-display text-white mb-3">AI Strategy & Consulting</h3>
                         <p className="text-slate-400 mb-6 flex-grow">
                             Identify high-value AI opportunities within your business. I provide roadmaps for integrating LLMs, automations, and intelligent workflows.
                         </p>
-                        <Button variant="outline" size="sm" className="w-full mt-auto">Learn More</Button>
+                        <Button variant="outline" size="sm" className="w-full mt-auto" onClick={() => window.location.href = '/contact'}>Book Strategy Session</Button>
                     </Card>
 
                     {/* Service 2 */}
-                    <Card className="hover:border-primary-500/50 group">
+                    <Card className="hover:border-primary-500/50 group flex flex-col">
                         <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                            <span className="text-2xl">⚡</span>
                         </div>
                         <h3 className="text-xl font-bold font-display text-white mb-3">Custom App Development</h3>
                         <p className="text-slate-400 mb-6 flex-grow">
                             Full-stack development using React, TypeScript, and Node.js. I build scalable, secure, and lightning-fast applications tailored to your needs.
                         </p>
-                        <Button variant="outline" size="sm" className="w-full mt-auto">View Projects</Button>
+                        <Button variant="outline" size="sm" className="w-full mt-auto" onClick={() => window.location.href = '/contact'}>Discuss Your App</Button>
                     </Card>
 
                     {/* Service 3 */}
-                    <Card className="hover:border-primary-500/50 group">
+                    <Card className="hover:border-primary-500/50 group flex flex-col">
                         <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                            <span className="text-2xl">🔄</span>
                         </div>
                         <h3 className="text-xl font-bold font-display text-white mb-3">WordPress to Hybrid</h3>
                         <p className="text-slate-400 mb-6 flex-grow">
                             Get the best of both worlds. Keep your easy WordPress backend while upgrading your frontend to a modern, headless React experience.
                         </p>
-                        <Link to="/contact" className="w-full mt-auto">
-                            <Button variant="outline" size="sm" className="w-full">See Process</Button>
-                        </Link>
+                        <Button variant="outline" size="sm" className="w-full mt-auto" onClick={() => window.location.href = '/contact'}>Start Migration</Button>
+                    </Card>
+
+                    {/* Service 4: RAG */}
+                    <Card className="hover:border-primary-500/50 group flex flex-col">
+                        <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
+                            <span className="text-2xl">📚</span>
+                        </div>
+                        <h3 className="text-xl font-bold font-display text-white mb-3">RAG Implementation</h3>
+                        <p className="text-slate-400 mb-6 flex-grow">
+                            Connect your private data to Large Language Models. I build secure Retrieval-Augmented Generation pipelines for "chat with your docs" functionality.
+                        </p>
+                        <Button variant="outline" size="sm" className="w-full mt-auto" onClick={() => window.location.href = '/contact'}>Build RAG System</Button>
+                    </Card>
+
+                    {/* Service 5: Agent Training */}
+                    <Card className="hover:border-primary-500/50 group flex flex-col">
+                        <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
+                            <span className="text-2xl">🧠</span>
+                        </div>
+                        <h3 className="text-xl font-bold font-display text-white mb-3">AI Agent Training</h3>
+                        <p className="text-slate-400 mb-6 flex-grow">
+                            Create autonomous agents that understand your brand voice and specific workflows. I fine-tune prompts and configure agent behavior for maximum reliability.
+                        </p>
+                        <Button variant="outline" size="sm" className="w-full mt-auto" onClick={() => window.location.href = '/contact'}>Train Your Agents</Button>
+                    </Card>
+
+                    {/* Service 6: APIs */}
+                    <Card className="hover:border-primary-500/50 group flex flex-col">
+                        <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
+                            <span className="text-2xl">🔌</span>
+                        </div>
+                        <h3 className="text-xl font-bold font-display text-white mb-3">API Integration</h3>
+                        <p className="text-slate-400 mb-6 flex-grow">
+                            Seamlessly connect disparate systems. I build robust API layers that allow your AI tools, CRM, and website to talk to each other in real-time.
+                        </p>
+                        <Button variant="outline" size="sm" className="w-full mt-auto" onClick={() => window.location.href = '/contact'}>Connect Systems</Button>
+                    </Card>
+
+                    {/* Service 7: Performance */}
+                    <Card className="hover:border-primary-500/50 group flex flex-col">
+                        <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
+                            <span className="text-2xl">🚀</span>
+                        </div>
+                        <h3 className="text-xl font-bold font-display text-white mb-3">Performance Optimization</h3>
+                        <p className="text-slate-400 mb-6 flex-grow">
+                            Speed matters. I audit and optimize your web applications for Core Web Vitals, ensuring lightning-fast load times and smooth interactions.
+                        </p>
+                        <Button variant="outline" size="sm" className="w-full mt-auto" onClick={() => window.location.href = '/contact'}>Optimize Speed</Button>
+                    </Card>
+
+                    {/* Service 8: SaaS MVP */}
+                    <Card className="hover:border-primary-500/50 group flex flex-col">
+                        <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
+                            <span className="text-2xl">💎</span>
+                        </div>
+                        <h3 className="text-xl font-bold font-display text-white mb-3">SaaS Prototyping</h3>
+                        <p className="text-slate-400 mb-6 flex-grow">
+                            Validate your idea fast. I build functional Minimum Viable Products (MVPs) that look premium and work perfectly, ready for investor demo day.
+                        </p>
+                        <Button variant="outline" size="sm" className="w-full mt-auto" onClick={() => window.location.href = '/contact'}>Start Your MVP</Button>
+                    </Card>
+
+                    {/* Service 9: Data Pipelines */}
+                    <Card className="hover:border-primary-500/50 group flex flex-col">
+                        <div className="w-12 h-12 rounded-lg bg-primary-500/10 flex items-center justify-center mb-6 text-primary-400 group-hover:text-primary-300 group-hover:bg-primary-500/20 transition-colors">
+                            <span className="text-2xl">🌊</span>
+                        </div>
+                        <h3 className="text-xl font-bold font-display text-white mb-3">Data Engineering</h3>
+                        <p className="text-slate-400 mb-6 flex-grow">
+                            Clean data is the fuel for AI. I design and build reliable data pipelines to collect, process, and store your business intelligence.
+                        </p>
+                        <Button variant="outline" size="sm" className="w-full mt-auto" onClick={() => window.location.href = '/contact'}>Fix Your Data</Button>
                     </Card>
                 </div>
 

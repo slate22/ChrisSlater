@@ -43,7 +43,7 @@ export default function About() {
                                 I am an AI Strategist and Full Stack Developer obsessed with the intersection of code, content, and cognitive computing.
                             </p>
                             <p className="text-slate-400 leading-relaxed">
-                                Over 2 decades, I've built digital products that solve real problems. Now, I leverage Generative AI to architect systems that don't just function—they think, adapt, and scale. My mission is to help businesses transition from static web presences to dynamic, intelligent ecosystems.
+                                For over 2 decades, I've built digital products that solve real problems. Now, I leverage Generative AI to architect systems that don't just function—they think, adapt, and scale. My mission is to help businesses transition from static web presences to dynamic, intelligent ecosystems.
                             </p>
                         </div>
                     </div>
