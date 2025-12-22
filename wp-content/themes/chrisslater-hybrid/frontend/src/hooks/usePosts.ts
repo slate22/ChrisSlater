@@ -49,7 +49,23 @@ export function usePosts() {
                 console.log('SafeWordPressData: Raw Response:', data); // LOGGING DATA
 
                 if (Array.isArray(data)) {
-                    setPosts(data);
+                    // Inject Static Promo Post
+                    const promoPost: Post = {
+                        id: 10001,
+                        date: new Date().toISOString(),
+                        slug: 'architect-your-future-with-custom-ai-agents',
+                        title: { rendered: 'Beyond Chatbots: How Custom AI Agents Are Revolutionizing Operations' },
+                        excerpt: { rendered: 'Stop settling for generic answers. Discover how specialized, autonomous AI agents can handle complex workflows, integrate with your data, and scale your business 24/7.' },
+                        content: { rendered: '' }, // Content loaded in Post.tsx
+                        _embedded: {
+                            'wp:featuredmedia': [{
+                                source_url: '/assets/images/ai-circuitry.jpg', // Re-use existing asset or placeholder
+                                alt_text: 'AI Circuitry'
+                            }],
+                            author: [{ name: 'Chris Slater' }]
+                        }
+                    };
+                    setPosts([promoPost, ...data]);
                 } else {
                     console.warn('SafeWordPressData: Received non-array data', data);
                     setPosts([]);

@@ -40,11 +40,46 @@ export default function Post() {
     variables: { slug },
   });
 
-  if (loading) return <div className="container mx-auto px-4 py-16">Loading...</div>;
-  if (error) return <div className="container mx-auto px-4 py-16">Error loading content.</div>;
+  // STATIC PROMO POST DATA
+  const isPromo = slug === 'architect-your-future-with-custom-ai-agents';
+  const promoData = isPromo ? {
+    title: 'Beyond Chatbots: How Custom AI Agents Are Revolutionizing Operations',
+    content: `
+        <h2>Unlock the Power of Autonomous AI</h2>
+        <p>The era of simple chatbots is over. We are now entering the age of <strong>Agentic AI</strong>—intelligent systems capable of planning, reasoning, and executing complex tasks autonomously.</p>
+        
+        <h3>Features that Redefine Productivity</h3>
+        <ul>
+            <li><strong>Autonomous Execution:</strong> Agents don't just talk; they do. They can browse the web, access APIs, and manipulate files.</li>
+            <li><strong>Specialized Knowledge:</strong> Train agents on your specific documents, codebases, or brand guidelines.</li>
+            <li><strong>24/7 Operations:</strong> Your AI workforce never sleeps, ensuring business continuity around the clock.</li>
+        </ul>
+
+        <h3>Real-World Use Cases</h3>
+        <ul>
+            <li><strong>Customer Support:</strong> Resolve tickets instantly with agents that can check order status and process refunds.</li>
+            <li><strong>Data Analysis:</strong> Feed raw data to an agent and receive actionable insights and visualizations in seconds.</li>
+            <li><strong>Content Factory:</strong> Generate SEO-optimized blog posts, social media updates, and newsletters on autopilot.</li>
+        </ul>
+
+        <p>Ready to build your workforce?</p>
+        <p style="text-align: center; margin-top: 40px;">
+            <a href="/agent-builder" class="bg-primary-500 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-primary-400 transition-all inline-block no-underline">
+                Launch Agent Builder &rarr;
+            </a>
+        </p>
+      `,
+    excerpt: 'Stop settling for generic answers. Discover how specialized, autonomous AI agents can handle complex workflows...',
+    date: new Date().toISOString(),
+    featuredImage: { node: { sourceUrl: '/assets/images/ai-circuitry.jpg' } }, // Local asset path
+    author: { node: { name: 'Chris Slater' } }
+  } : null;
+
+  if (loading && !isPromo) return <div className="container mx-auto px-4 py-16 text-white text-center">Loading...</div>;
+  if (error && !isPromo) return <div className="container mx-auto px-4 py-16 text-white text-center">Error loading content.</div>;
 
   // Check if it's a post or page (naive check, usually you'd separate queries or use Union types)
-  const contentNode = data?.post || data?.page;
+  const contentNode = isPromo ? promoData : (data?.post || data?.page);
 
   // Helper to strip shortcodes and clean content
   const stripShortcodes = (html: string) => {
