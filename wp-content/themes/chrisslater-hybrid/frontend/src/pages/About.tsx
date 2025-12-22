@@ -35,6 +35,10 @@ export default function About() {
                             <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
                                 Bridging <span className="text-gradient">Human Creativity</span> & <br />Machine Intelligence
                             </h1>
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-sm font-medium mb-6">
+                                <span className="text-amber-400">⚡</span>
+                                100x Developer
+                            </div>
                             <p className="text-xl text-slate-300 leading-relaxed mb-6">
                                 I am an AI Strategist and Full Stack Developer obsessed with the intersection of code, content, and cognitive computing.
                             </p>
