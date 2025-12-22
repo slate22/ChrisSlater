@@ -12,9 +12,15 @@ export function Hero() {
             </div>
 
             <div className="container relative z-10 px-4 md:px-6 text-center max-w-5xl mx-auto">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-primary-300 text-sm font-medium mb-8 animate-fade-in-up">
-                    <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse"></span>
-                    Available for AI Strategy Roles
+                <div className="flex flex-wrap justify-center gap-4 mb-8 animate-fade-in-up">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-primary-300 text-sm font-medium">
+                        <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse"></span>
+                        Available for AI Strategy Roles
+                    </div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-sm font-medium">
+                        <span className="text-amber-400">⚡</span>
+                        100x Developer
+                    </div>
                 </div>
 
                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight mb-8 leading-tight">
