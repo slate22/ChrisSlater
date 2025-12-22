@@ -84,8 +84,8 @@ export default function Shop() {
 
               <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
                 <span className="text-xl font-bold text-primary-400">{product.price}</span>
-                <Button size="sm" className="bg-white text-slate-900 hover:bg-white/90 font-bold border-none shadow-lg">
-                  Add to Cart
+                <Button size="sm" className="bg-white text-slate-900 hover:bg-white/90 font-bold border-none shadow-lg" onClick={() => window.location.href = '/contact'}>
+                  Inquire Now
                 </Button>
               </div>
             </Card>

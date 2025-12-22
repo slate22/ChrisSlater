@@ -9,6 +9,7 @@ import Blog from './pages/Blog';
 import Shop from './pages/Shop';
 import Contact from './pages/Contact';
 import AgentBuilder from './pages/AgentBuilder';
+import Tools from './pages/Tools';
 import NotFound from './pages/NotFound';
 import Post from './pages/Post';
 
@@ -23,6 +24,7 @@ export default function App() {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/shop" element={<Shop />} />
                 <Route path="/agent-builder" element={<AgentBuilder />} />
+                <Route path="/tools" element={<Tools />} />
                 <Route path="/:slug" element={<Post />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

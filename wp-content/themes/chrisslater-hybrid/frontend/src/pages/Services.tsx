@@ -73,7 +73,7 @@ export default function Services() {
                     <p className="text-slate-400 mb-8 max-w-2xl mx-auto relative z-10">
                         Book a free 15-minute discovery call to discuss your project.
                     </p>
-                    <Button size="lg" className="relative z-10">Book Discovery Call</Button>
+                    <Button size="lg" className="relative z-10" onClick={() => window.location.href = '/contact'}>Book Discovery Call</Button>
                 </div>
             </div>
         </div>

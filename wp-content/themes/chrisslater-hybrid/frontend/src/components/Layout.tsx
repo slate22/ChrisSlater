@@ -25,6 +25,7 @@ export function Layout({ children }: LayoutProps) {
     const navLinks = [
         { name: 'About', path: '/about' },
         { name: 'Services', path: '/services' },
+        { name: 'Tools', path: '/tools' },
         { name: 'Blog', path: '/blog' },
         { name: 'Shop', path: '/shop' },
     ];

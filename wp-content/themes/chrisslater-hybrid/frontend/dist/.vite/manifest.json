@@ -12,12 +12,12 @@
     "src": "src/assets/images/chris-palm-v2.png"
   },
   "src/main.tsx": {
-    "file": "assets/main-CGqJhdYQ.js",
+    "file": "assets/main-BZgo5Cf3.js",
     "name": "main",
     "src": "src/main.tsx",
     "isEntry": true,
     "css": [
-      "assets/main-D0MiMHRd.css"
+      "assets/main-DL7q1DAs.css"
     ],
     "assets": [
       "assets/chris-beach-DOeeOAqt.jpg",
